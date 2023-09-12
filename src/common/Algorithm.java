@@ -4,26 +4,32 @@
  */
 package common;
 
+import java.util.HashSet;
 import java.util.StringTokenizer;
+import java.util.Set;
 
 public class Algorithm {
     public String countingLetter(String string){
         StringTokenizer st = new StringTokenizer(string);
         StringBuilder result = new StringBuilder();
+        Set<String> countedWords = new HashSet<>();
         while(st.hasMoreTokens()){
             String str = st.nextToken();
-            int index = 0, count = 0;
-            while(true){
-                index = string.indexOf(str, index);
-                if(index!=-1){
-                    count++;
-                    index += str.length();
+            if(!countedWords.contains(str)){
+                int index = 0, count = 0;
+                while(true){
+                    index = string.indexOf(str, index);
+                    if(index!=-1){
+                        count++;
+                        index += str.length();
+                    }
+                    else{
+                        break;
+                    }
                 }
-                else{
-                    break;
-                }
+                result.append(str).append("=").append(count).append(", ");
+                countedWords.add(str);
             }
-            result.append(str).append("=").append(count).append(", ");
         }
         String finalResult = result.toString().replaceAll(", $", "");
         return finalResult;
